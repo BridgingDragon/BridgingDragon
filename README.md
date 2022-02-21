@@ -1,0 +1,3 @@
+- 👋 Hi, I’m @BridgingDragon
+- 👀 I’m interested in Minecraft and Python
+- 🌱 I’m currently learning Python
