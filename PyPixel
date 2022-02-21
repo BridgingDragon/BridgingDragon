@@ -1,0 +1,194 @@
+import requests
+import math
+from math import sqrt
+import os
+import colorama
+from colorama import Fore
+from colorama import init
+
+key = os.environ.get('KEY')
+
+apidata = requests.get(
+	url = "https://api.hypixel.net/key",
+	params = {
+		"key": (key)
+  }
+ ).json()
+
+#Checks API requests
+API_Requests = apidata["record"]["queriesInPastMin"]
+
+if API_Requests > 65:
+	print("Too many API requests, please try again later")
+	exit()
+elif API_Requests > 100:
+	print("Woah theres way too many requests, try again later")
+	exit()
+elif API_Requests == 120:
+	print("We have reached the max API requests, please try again in a few minutes")
+
+#Gives some information about the code
+print(Fore.WHITE + "PyPixel, Hypixel API but built in python, V1.2")
+print("   This code should be used to get information on Hypixel players")
+print("   NOTE: There is a cooldown on searching for the same user multiple times")
+print("      If this code is abused, I will change my API key and it will stop working")
+
+while True:
+	#Asks for users IGN
+	print(" ")
+	IGN = input("What is your IGN? ")
+	print(" ")
+	
+	#Requests data from Hypixel API
+	try:
+		data = requests.get(
+   	 url = "https://api.hypixel.net/player",
+   	 params = {
+   	     "key": (key),
+   	     "name": (IGN)
+  	  }
+	).json()
+	except Exception as errors:
+		print('Unknown ERROR')
+		print(errors)
+
+	#Finds other specific data from the Hypixel API
+	try:
+		Old_IGNs = data["player"]["knownAliases"]
+		UUID = data["player"]["uuid"]
+		NetworkXP = data["player"]["networkExp"]
+		KarmaAmount = data["player"]["karma"]
+		TotalDailyRewards = data["player"]["totalDailyRewards"]
+		RewardStreak = data["player"]["rewardHighScore"]
+		RankPlusColor = data["player"]["rankPlusColor"]
+		YouTube = data["player"]["socialMedia"]["links"]["YOUTUBE"]
+		Discord = data["player"]["socialMedia"]["links"]["DISCORD"]
+		Twitter = data["player"]["socialMedia"]["links"]["TWITTER"]
+		Hypixel_Forums = data ["player"]["socialMedia"]["links"]["HYPIXEL"]
+	except TypeError:
+		print('Invalid IGN, please try again')
+	except KeyError as keyerror:
+		print('Could not find this data (user does not have this data)')
+		print('If "player" is not found then API is on cooldown')
+		print(' ')
+		print(keyerror)
+		print(' ')
+		break
+
+while True:
+	#Asks if user wants a list
+	viewlist = input("Would you like to view a list of options? ")
+
+	#Prints list
+	if viewlist.lower() == "yes":
+		print (" ")
+		print ("Old_IGNs | Prints their old IGNs")
+		print ("UUID | Prints their Minecraft UUID")
+		print("NetworkEXP | Prints their Hypixel level")
+		print("Karma_Amount | Prints their amount of Hypixel karma")
+		print("Total_Daily_Rewards | Prints the amount of daily rewards they have claimed")
+		print("Highest_Reward_Streak | Prints their highest streak of claiming their daily rewards.")
+		print("Plus_Color | Prints their Hypixel rank + color")
+		print (" ")
+
+	#Asks what information they would like
+
+	if viewlist.lower() == "yes":
+		option = input ("What information would you like? ")
+		print(" ")
+		break
+		
+	if viewlist.lower() == "no":
+		print (" ")
+		option = input ("What information would you like? ")
+		print(" ")
+		break
+	
+	else:
+		print("Please try again, Yes or No")
+
+#Lists their old IGNs
+if option.lower() == "old_igns":
+	try:
+		print("Here are their old IGNs", Old_IGNs)
+	except:
+		print("This user has had no old IGNs")
+
+#Writes their UUID
+elif option.lower() == "uuid":
+	try:
+		print("Here is their UUID", UUID)
+	except:
+		print("This user has no UUID ???")
+
+#Writes their Hypixel Level
+elif option.lower() == "networkexp":
+	try:
+		lvl1 = (math.sqrt((2/2500)*(NetworkXP+(10000-2500/2)**2/(2*2500)))-(10000-2500/2)/2500)+1
+		lvl = round(lvl1, 3)
+		print ("They are Hypixel level", lvl)
+	except:
+		print("This user has no Hypixel level")
+
+#Writes their Karma account
+elif option.lower() == "karma_amount":
+	try:
+		karma = "{:,}".format(KarmaAmount)
+		print ("They have", karma,"karma")
+	except:
+		print("This user has no karma")
+
+#Writes how many daily rewards they have claimed	
+elif option.lower() == "total_daily_rewards":
+	try:
+		print ("They have claimed", (TotalDailyRewards),"daily rewards")
+	except:
+		print("This user has not claimed any daily rewards")
+
+#Writes their highest daily reward streak	
+elif option.lower() == "highest_reward_streak":
+	try:
+		print ("Their highest streak was", (RewardStreak))
+	except:
+		print("This user has never had a reward streak")
+
+#Writes their rank plus color
+elif option.lower() == "plus_color":
+	try:
+		print ("Their plus color is", (RankPlusColor))
+	except:
+		print("No plus color selected (NON or VIP)")
+
+#Writes their social medias
+
+elif option.lower() == "social_medias":
+	print ("Here is a list of their social medias")
+	print (" ")
+	try:
+		print (YouTube)
+		print(" ")
+	except:
+		print("No YouTube account linked")	
+		print(" ")
+	try:
+		print (Discord)
+		print(" ")
+	except:
+		print("No Discord account linked")
+		print(" ")
+	try:
+		print (Twitter)
+		print(" ")
+	except:
+		print("No Twitter account linked")
+		print(" ")
+	try:
+		print (Hypixel_Forums)
+		print(" ")
+	except:
+		print("No Hypixel Forums account linked")
+		print(" ")
+	
+#Gives a ERROR if option is not there
+else:
+	print ("Unkown option, please try again.")
