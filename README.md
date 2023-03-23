@@ -1,9 +1,6 @@
-<div align="center">
-    <a href="https://github.com/BridgingDragon">
-      <img align="center" src="https://github-readme-stats.vercel.app/api?username=BridgingDragon&show_icons=true&line_height=27&count_private=true&title_color=ffffff&text_color=c9cacc&icon_color=2bbc8a&bg_color=1d1f21&hide=stars&custom_title=GitHub%20Stats" alt="GitHub Stats" />
-    </a>
-    <br><br>
-    <a href="https://github.com/BridgingDragon">
-      <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=BridgingDragon&hide=html,css&title_color=ffffff&text_color=c9cacc&icon_color=2bbc8a&bg_color=1d1f21&langs_count=3" />
-    </a>
-</div>
+<img align="right" src="https://github-readme-stats.vercel.app/api?username=BridgingDragon&show_icons=true&icon_color=CE1D2D&text_color=718096&bg_color=00000000&hide_title=true&hide_border=true" />
+
+### Hello there，I'm BridgingDraon 🙋‍♂️
+
+- Learning JS is my current goal.
+- Coding discord bots and Minecraft plugins is what im currently working on.
